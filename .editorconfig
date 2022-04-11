@@ -1,0 +1,4 @@
+root = True
+
+[*.{ts,js}]
+max_line_length = 120

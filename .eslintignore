@@ -1,0 +1,5 @@
+demo/
+dist/
+__tests__/
+src/private-data/base85/base85.ts
+src/wasm-context/go.js

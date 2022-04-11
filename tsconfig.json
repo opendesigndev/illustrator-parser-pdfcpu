@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "moduleResolution": "node",
+    "strict": true,
+    "lib": ["es2021.string", "webworker"],
+    "skipLibCheck": true,
+    "module": "es2020",
+    "target": "es5",
+    "allowJs": true
+  },
+  "include": ["src", "__test__", "scripts"],
+  "ts-node": {
+    "transpileOnly": true,
+    "files": true,
+    "compilerOptions": {
+      "module": "esnext"
+    }
+  }
+}

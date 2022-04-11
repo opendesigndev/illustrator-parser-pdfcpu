@@ -1,0 +1,69 @@
+{
+  "devDependencies": {
+    "@brightcove/kacl": "^0.1.11",
+    "@rollup/plugin-node-resolve": "^14.1.0",
+    "@rollup/plugin-typescript": "^8.3.2",
+    "@types/diff": "^5.0.2",
+    "@types/gulp": "^4.0.9",
+    "@types/tiny-async-pool": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/parser": "^5.26.0",
+    "diff": "^5.0.0",
+    "eslint": "^8.16.0",
+    "eslint-plugin-filenames": "^1.3.2",
+    "hereby": "^1.6.4",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
+    "rollup-plugin-dts": "^4.2.1",
+    "tiny-async-pool": "^2.0.1",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.7.2",
+    "vitest": "^0.25.1"
+  },
+  "dependencies": {
+    "gl-matrix": "^3.4.3",
+    "immutable": "^4.1.0",
+    "marky": "^1.2.4"
+  },
+  "name": "@opendesign/illustrator-parser-pdfcpu",
+  "description": "Parser for Adobe Illustrator files targeting both browser & Node.js",
+  "version": "1.1.2",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./fs_context": {
+      "import": "./dist/fs_context.mjs",
+      "require": "./dist/fs_context.cjs",
+      "types": "./dist/fs_context.d.ts"
+    },
+    "./wasm_context": {
+      "import": "./dist/wasm_context.mjs",
+      "require": "./dist/wasm_context.cjs",
+      "types": "./dist/wasm_context.d.ts"
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "build": "hereby",
+    "test": "vitest run --silent",
+    "parse": "node scripts/parse",
+    "prepublishOnly": "rimraf dist && npm run build",
+    "postinstall": "scripts/link_binaries.js || true",
+    "typecheck": "tsc --noEmit --project .",
+    "tslint": "eslint src/",
+    "posttest": "kacl lint",
+    "version": "kacl release && git add CHANGELOG.md",
+    "prettier": "prettier __tests__ src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:opendesigndev/illustrator-parser-pdfcpu.git"
+  },
+  "author": "",
+  "license": "Apache-2.0"
+}

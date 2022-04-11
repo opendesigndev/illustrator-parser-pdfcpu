@@ -1,0 +1,15 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "filenames"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "rules": {
+    "eqeqeq": [2, "smart"],
+    "filenames/match-regex": [2, "^[-.a-z0-9]+$", true],
+    "filenames/match-exported": [2, "camel"],
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-non-null-assertion": "error",
+    "@typescript-eslint/no-unused-vars": "error",
+    "max-lines-per-function": ["error", { "max": 30 }]
+  }
+}

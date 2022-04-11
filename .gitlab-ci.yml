@@ -1,0 +1,88 @@
+stages:
+  - lint
+  - test
+  - build
+
+variables:
+  GIT_DEPTH: '1'
+  GIT_SUBMODULE_STRATEGY: 'none'
+  FF_USE_FASTZIP: 'true'
+
+image:
+  name: nixos/nix
+
+before_script:
+  # https://stackoverflow.com/a/58454193/18355339
+  - nix-env -f shell.nix -i -A buildInputs
+  - npm ci
+
+extract-data-test-job:
+  cache:
+    - paths:
+        - test-data
+  stage: test
+  tags:
+    - big
+  script:
+    - export GOGC=20 # makes Go GC grow space by 20% increments, instead of 100% (the default)
+    - npm run build parseAll
+
+extract-data-test-job-no-poppler-compat:
+  cache:
+    - paths:
+        - test-data
+  stage: test
+  tags:
+    - big
+  script:
+    - export GOGC=20 # makes Go GC grow space by 20% increments, instead of 100% (the default)
+    - export DISABLE_STRICT_POPPLER_COMPAT=t
+    - npm run build parseAll
+
+extract-data-test-job-wasm:
+  cache:
+    - paths:
+        - test-data
+  stage: test
+  tags:
+    - big
+  script:
+    - export GOGC=20 # makes Go GC grow space by 20% increments, instead of 100% (the default)
+    - export USE_WASM=t
+    - npm run build parseAll
+
+unit-test-job:
+  tags:
+    - big
+  stage: test
+  script:
+    - npm run build
+    - npm test
+
+typecheck-lint-job:
+  stage: lint
+  script:
+    - npm run typecheck
+
+tslint-lint-job:
+  stage: lint
+  script:
+    - npm run tslint
+
+prettier-lint-job:
+  stage: lint
+  script:
+    - npm run prettier -- -c
+
+demo-build-job:
+  stage: build
+  script:
+    - npm run build
+    - cd demo
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - demo/dist
+    expose_as: demo
+    expire_in: 1 week
